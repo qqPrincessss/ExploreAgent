@@ -1,0 +1,17 @@
+{
+  "name": "shop-admin",
+  "private": true,
+  "version": "0.0.0",
+  "description": "电商管理平台 + AI（monorepo：apps/web 前端 + apps/api 后端）",
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "dev:web": "npm run dev -w @shop-admin/web",
+    "dev:api": "npm run start:dev -w @shop-admin/api",
+    "dev:agent": "npm run dev -w @shop-admin/agent",
+    "build:web": "npm run build -w @shop-admin/web",
+    "build:api": "npm run build -w @shop-admin/api",
+    "build:agent": "npm run build -w @shop-admin/agent"
+  }
+}

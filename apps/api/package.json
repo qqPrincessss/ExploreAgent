@@ -1,0 +1,36 @@
+{
+  "name": "@shop-admin/api",
+  "version": "0.0.1",
+  "description": "电商管理平台后端（NestJS）",
+  "author": "",
+  "private": true,
+  "license": "UNLICENSED",
+  "type": "module",
+  "scripts": {
+    "build": "nest build",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "start": "nest start",
+    "start:dev": "nest start --watch",
+    "start:debug": "nest start --debug --watch",
+    "start:prod": "node dist/main",
+    "lint": "oxlint --type-aware src/"
+  },
+  "dependencies": {
+    "@nestjs/common": "^12.0.1",
+    "@nestjs/core": "^12.0.1",
+    "@nestjs/platform-express": "^12.0.1",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.1"
+  },
+  "devDependencies": {
+    "@nestjs/cli": "^12.0.0",
+    "@nestjs/schematics": "^12.0.0",
+    "@types/express": "^5.0.0",
+    "@types/node": "^24.0.0",
+    "oxlint": "^1.58.0",
+    "oxlint-tsgolint": "^7.0.2001",
+    "prettier": "^3.4.2",
+    "source-map-support": "^0.5.21",
+    "typescript": "^6.0.2"
+  }
+}
