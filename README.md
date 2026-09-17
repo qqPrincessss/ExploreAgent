@@ -1,57 +1,71 @@
 # ExploreAgent
 
-DeerFlow 风格的 research agent 练手项目。用户提问 → 规划 → 联网搜索 → 汇总报告。
-npm workspaces monorepo，含 agent 核心、后端接口、前端展示三部分。
+基于 LangGraph.js 与 Anthropic Claude 的深度研究 Agent。面向一个研究问题，自动完成任务规划、联网检索与信息汇总，最终输出结构化研究报告。
 
-## 目录结构
+## 特性
+
+- **任务规划**：将研究问题拆解为可执行的子任务
+- **联网检索**：通过搜索工具获取实时信息
+- **报告汇总**：整合检索结果，生成结构化研究报告
+- **前后端一体**：提供 HTTP 接口与 Web 界面，可交互式发起研究
+
+## 架构
+
+采用 npm workspaces 管理的 monorepo，分为三个部分：
 
 ```
 ExploreAgent/
-├─ package.json        # workspace 根，聚合脚本
 ├─ apps/
-│  ├─ agent/           # research agent 核心：LangGraph.js + Anthropic（骨架，逻辑待写）
-│  ├─ api/             # 后端：NestJS（全局前缀 /api，已开启 CORS）
-│  └─ web/             # 前端：Vite + React + TypeScript + Ant Design
+│  ├─ agent/    Agent 核心：LangGraph.js 编排 + Anthropic Claude
+│  ├─ api/      后端服务：NestJS，对外提供 HTTP 接口
+│  └─ web/      前端界面：Vite + React + TypeScript + Ant Design
 ```
 
-## 技术栈
+| 模块 | 技术栈 |
+|------|--------|
+| Agent | LangGraph.js（`@langchain/langgraph`）、`@langchain/anthropic` |
+| 后端 | NestJS |
+| 前端 | Vite、React、TypeScript、Ant Design |
 
-- Agent：LangGraph.js（`@langchain/langgraph`）+ `@langchain/anthropic`，规划 → 搜索 → 汇总
-- 后端：NestJS（计划提供 `/api/agent` 接口调用 agent）
-- 前端：Vite + React 18 + TypeScript + Ant Design
-- LLM：Anthropic Claude
-- 搜索：Tavily（联网搜索工具，可先 mock）
+## 环境要求
+
+- Node.js >= 20
+- Anthropic API Key
+- 搜索服务 API Key（Tavily）
 
 ## 环境变量
 
-`apps/agent/.env.example` 列出所需 key（复制为 `.env` 后填入，`.env` 不入库）：
+复制 `apps/agent/.env.example` 为 `apps/agent/.env` 并填入：
 
-- `ANTHROPIC_API_KEY`：Claude 模型（必填）
-- `TAVILY_API_KEY`：联网搜索（可选，未填时用 mock 搜索）
+| 变量 | 说明 |
+|------|------|
+| `ANTHROPIC_API_KEY` | Anthropic Claude 模型密钥 |
+| `TAVILY_API_KEY` | Tavily 搜索服务密钥 |
 
 ## 快速开始
 
 ```bash
-npm install            # 根目录安装全部 workspace 依赖
+# 安装依赖
+npm install
 
-npm run dev:agent      # 运行 agent（需先写 src/index.ts）
-npm run dev:api        # 启动后端（http://localhost:3000，接口前缀 /api）
-npm run dev:web        # 启动前端（http://localhost:5173，/api 代理到后端）
+# 启动后端服务（http://localhost:3000，接口前缀 /api）
+npm run dev:api
+
+# 启动前端界面（http://localhost:5173）
+npm run dev:web
+
+# 运行 Agent
+npm run dev:agent
 ```
 
-## 各部分状态
+## 构建
 
-| workspace | 状态 |
-|-----------|------|
-| `apps/agent` | 依赖与 tsconfig 就绪，`src/` 为空目录，agent 逻辑（planner/researcher/reporter、搜索工具）待编写 |
-| `apps/api` | NestJS 骨架可运行，`GET /api` 返回 200；`/api/agent` 接口待添加 |
-| `apps/web` | Vite+React+TS+AntD 骨架可运行，业务页面待开发 |
+```bash
+npm run build:agent
+npm run build:api
+npm run build:web
+```
 
-> 注意：`apps/agent` 的 `dev`/`build` 脚本指向 `src/index.ts`，该文件尚未创建，
-> 因此在写入 agent 逻辑前这两个脚本会失败，属预期状态。
+## 许可证
 
-## 下一步
-
-- agent：在 `apps/agent/src` 用 LangGraph 搭 planner → researcher → reporter 图，接入搜索工具
-- api：新增 `/api/agent` 接口调用 agent
-- web：做一个提问 + 展示研究报告的页面
+MIT
